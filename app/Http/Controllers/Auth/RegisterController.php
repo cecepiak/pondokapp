@@ -17,7 +17,6 @@ class RegisterController extends Controller
     {
         // Ambil data kecamatan dari tabel setup_kec
         $kecamatans = DB::table('setup_kec')->orderBy('nama_kec')->get();
-
         return view('auth.register', compact('kecamatans'));
     }
 
