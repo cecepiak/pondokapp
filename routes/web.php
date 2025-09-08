@@ -11,7 +11,6 @@ use App\Http\Controllers\LayananController;
 
 // Rute yang dapat diakses tanpa login
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/tracking', [TrackingController::class, 'index'])->name('tracking.index');
 
 // Rute untuk otentikasi
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
