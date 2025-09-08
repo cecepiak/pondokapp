@@ -29,3 +29,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/konsultasi', [LayananController::class, 'showForm'])->name('layanan.konsultasi');
+Route::get('/desa', [RegisterController::class, 'getDesa']);
