@@ -10,10 +10,10 @@ class SetupKel extends Model
     use HasFactory;
 
     // Menentukan nama tabel yang sesuai
-    protected $table = 'setup_kel';
+    protected $table = 'desa';
 
     // Menentukan primary key
-    protected $primaryKey = 'no_kel';
+    protected $primaryKey = 'id';
 
     // Matikan timestamps jika tidak ada di tabel
     public $timestamps = false;

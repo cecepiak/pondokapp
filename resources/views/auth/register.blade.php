@@ -57,8 +57,8 @@
                 <select id="kecamatan" name="kecamatan" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 @error('kecamatan') border-red-500 @enderror">
                     <option value="">Pilih Kecamatan</option>
                     @foreach ($kecamatans as $kec)
-                    <option value="{{ $kec->no_kec }}" {{ old('kecamatan') == $kec->no_kec ? 'selected' : '' }}>
-                        {{ $kec->nama_kec }}
+                    <option value="{{ $kec->id }}" {{ old('kecamatan') == $kec->id ? 'selected' : '' }}>
+                        {{ $kec->nama }}
                     </option>
                     @endforeach
                 </select>
@@ -153,7 +153,7 @@
                         data.forEach(desa => {
                             const option = document.createElement('option');
                             option.value = desa.id; // Pastikan ID di tabel setup_kel
-                            option.textContent = desa.nama_kel;
+                            option.textContent = desa.nama;
                             desaDropdown.appendChild(option);
                         });
                         desaDropdown.disabled = false; // Aktifkan dropdown setelah terisi

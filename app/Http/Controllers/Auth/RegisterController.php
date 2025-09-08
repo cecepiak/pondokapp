@@ -16,7 +16,7 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         // Ambil data kecamatan dari tabel setup_kec
-        $kecamatans = DB::table('setup_kec')->orderBy('nama_kec')->get();
+        $kecamatans = DB::table('kecamatan')->orderBy('nama')->get();
         return view('auth.register', compact('kecamatans'));
     }
 
@@ -27,13 +27,13 @@ class RegisterController extends Controller
     public function getDesa(Request $request)
     {
         $kecamatanId = $request->input('id_kecamatan');
-        $desas = DB::table('setup_kel')
-                    ->where('no_kec', $kecamatanId)
-                    ->orderBy('nama_kel')->get();
+        $desas = DB::table('desa')
+            ->where('kecamatan_id', $kecamatanId)
+            ->orderBy('nama')->get();
 
         return response()->json($desas);
     }
-    
+
     public function register(Request $request)
     {
         // ... (metode register yang sudah ada)
