@@ -41,6 +41,9 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             
+            // Store user ID in session for AccountController
+            $request->session()->put('auth_user_id', Auth::id());
+            
             return redirect()->intended('dashboard-user');
         }
 

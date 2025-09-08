@@ -13,11 +13,11 @@ class AccountController extends Controller
     public function index()
     {
         // Asumsi mengambil pengguna dengan ID 1
-        $user = UserLegacy::find(126);
+        $user = UserLegacy::find(session('auth_user_id'));
         // Mengambil semua data kecamatan dan kelurahan untuk dropdown
         $kecamatan = SetupKec::all();
         $kelurahan = SetupKel::all();
-        
+
         // Kirim data pengguna yang sudah di-decode ke view
         return view('account.index', compact('user', 'kecamatan', 'kelurahan'));
     }
