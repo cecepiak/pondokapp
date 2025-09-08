@@ -10,10 +10,10 @@ class SetupKec extends Model
     use HasFactory;
 
     // Menentukan nama tabel yang sesuai
-    protected $table = 'setup_kec';
+    protected $table = 'kecamatan';
 
     // Menentukan primary key
-    protected $primaryKey = 'no_kec';
+    protected $primaryKey = 'id';
 
     // Matikan timestamps jika tidak ada di tabel
     public $timestamps = false;
