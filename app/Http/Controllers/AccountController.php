@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserLegacy;
-// use Illuminate\Support\Facades\Auth;
 use App\Models\SetupKec;
 use App\Models\SetupKel;
 
