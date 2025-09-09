@@ -27,7 +27,7 @@
     <h2 class="text-lg font-bold mb-2 text-center">Silahkan Pilih</h2>
         <div class="grid grid-cols-2 gap-4">
             {{-- Layanan Konsultasi --}}
-            <a href="/konsultasi" class="bg-white rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center p-4">
+            <a href="/formulir-konsultasi" class="bg-white rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center p-4">
                 <span class="material-symbols-outlined">support_agent</span>
                 <p class="font-bold text-black-500 mt-1 text-center">Layanan Konsultasi</p>
             </a>

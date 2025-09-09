@@ -7,7 +7,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\LayananController;
+// use App\Http\Controllers\LayananController;
 
 // Rute yang dapat diakses tanpa login
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -28,5 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tracking', [TrackingController::class, 'index'])->name('tracking.index');
 });
 
-Route::get('/konsultasi', [LayananController::class, 'showForm'])->name('layanan.konsultasi');
+// Route::get('/konsultasi', [LayananController::class, 'showForm'])->name('layanan.konsultasi');
+Route::get('/formulir-konsultasi', [App\Http\Controllers\KonsultasiController::class, 'showForm']);
+Route::post('/submit-konsultasi', [App\Http\Controllers\KonsultasiController::class, 'submitForm']);
 Route::get('/desa', [RegisterController::class, 'getDesa']);

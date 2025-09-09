@@ -61,7 +61,7 @@
                     Lupa Password?
                 </a>
                 <br>
-                <a href="#" class="inline-block align-baseline font-bold text-sm text-blue-600 hover:text-blue-800 mt-2 transition-colors duration-200">
+                <a href="/register" class="inline-block align-baseline font-bold text-sm text-blue-600 hover:text-blue-800 mt-2 transition-colors duration-200">
                     Daftar/Registrasi
                 </a>
             </div>
