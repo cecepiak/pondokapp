@@ -23,24 +23,17 @@ class UserLegacy extends Model implements Authenticatable
     /**
      * Accesor untuk field 'first_name'.
      */
-    public function getFirstNameAttribute($value)
-    {
-        return decrypt_legacy_field($value);
-    }
+    // public function getFirstNameAttribute($value)
+    // {
+    //     return decrypt_legacy_field($value);
+    // }
 
-    public function getPhoneAttribute($value)
-    {
-        return decrypt_legacy_field($value);
-    }
+    // public function getPhoneAttribute($value)
+    // {
+    //     return decrypt_legacy_field($value);
+    // }
 
-    public function getEmailAttribute($value)
-    {
-        return decrypt_legacy_field($value);
-    }
-
-    // Jika ada field lain yang perlu didekripsi, tambahkan accessor di sini.
-    // Contoh:
-    // public function getNikAttribute($value)
+    // public function getEmailAttribute($value)
     // {
     //     return decrypt_legacy_field($value);
     // }
