@@ -12,12 +12,13 @@
             <img src="{{ asset('storage/photos/' . $user->photos) }}" alt="Foto Profil" class="rounded-full w-16 h-16 mr-4 object-cover">
             @else
             {{-- Avatar default jika tidak ada foto --}}
-            <img src="https://ui-avatars.com/api/?name={{ urlencode($user->first_name) }}&size=64&background=random" alt="Avatar Default" class="rounded-full w-16 h-16 mr-4">
+            <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&size=64&background=random" alt="Avatar Default" class="rounded-full w-16 h-16 mr-4">
             @endif
             <div>
-                <p class="font-semibold text-lg">{{ $user->first_name }}</p>
+                <p class="font-semibold text-lg">{{ $user->name }}</p>
                 <p class="text-gray-700 text-sm italic">NIK : {{ $user->nik }}</p>
-                <p class="text-gray-700 text-sm italic">KK : {{ decrypt_legacy_field($user->no_kk) }}</p>
+                <p class="text-gray-700 text-sm italic">KK : {{ $user->kk }}</p>
+                <p class="text-gray-700 text-sm italic">Email : {{ $user->email }}</p>
             </div>
         </div>
     </div>
@@ -66,22 +67,17 @@
                     <select name="kec_id" id="kecamatan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         <option value="">Pilih Kecamatan</option>
                         @foreach ($kecamatan as $kec)
-                        <option value="{{ $kec->no_kec }}" @if ($user->kec_id == $kec->no_kec) selected @endif>
-                            {{ $kec->nama_kec }}
+                        <option value="{{ $kec->id }}" @if ($user->kec_id == $kec->id) selected @endif>
+                            {{ $kec->nama }}
                         </option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="mb-4">
-                    <label for="kelurahan" class="block text-sm font-medium text-gray-700">Kelurahan</label>
-                    <select name="kel_id" id="kelurahan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        {{-- Opsi ini akan diisi secara dinamis oleh JavaScript --}}
-                        @foreach ($kelurahan as $kel)
-                        <option value="{{ $kel->no_kel }}" @if ($user->kel_id == $kel->no_kel) selected @endif class="kelurahan-option" data-no-kec="{{ $kel->no_kec }}">
-                            {{ $kel->nama_kel }}
-                        </option>
-                        @endforeach
+                    <label for="desa_kelurahan" class="block text-sm font-medium text-gray-700">Desa/Kelurahan</label>
+                    <select name="desa_kelurahan" id="desa_kelurahan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <option value="">Pilih Desa/Kelurahan</option>
                     </select>
                 </div>
 
@@ -104,7 +100,6 @@
             </span>
             <span class="font-semibold">Keluar</span>
         </a>
-
     </div>
 </div>
 
@@ -118,57 +113,38 @@
             settingsForm.classList.toggle('hidden');
         });
 
+
         const kecamatanDropdown = document.getElementById('kecamatan');
-        const kelurahanDropdown = document.getElementById('kelurahan');
+        const desaDropdown = document.getElementById('desa_kelurahan');
 
-        // Menyimpan semua kelurahan dalam variabel JavaScript
-        const allKelurahan = @json($kelurahan);
-        //const userKelId = {
-        //    {
-        //        $user - > kel_id ? ? 'null'
-        //    }
-        //};
-        //const userKecId = {
-        //    {
-        //        $user - > kec_id ? ? 'null'
-        //    }
-        //};
+        // Event listener saat pilihan kecamatan berubah
+        kecamatanDropdown.addEventListener('change', function() {
+            const kecamatanId = this.value;
 
-        function updateKelurahanDropdown() {
-            const selectedKecamatanId = kecamatanDropdown.value;
+            // Bersihkan dropdown desa
+            desaDropdown.disabled = true; // Nonaktifkan dropdown desa saat memuat
 
-            // Hapus semua opsi kelurahan yang ada
-            kelurahanDropdown.innerHTML = '';
+            if (kecamatanId) {
+                fetch(`/desa?id_kecamatan=${kecamatanId}`) // Panggil rute API yang baru dibuat
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(desa => {
+                            const option = document.createElement('option');
+                            option.value = desa.id; // Pastikan ID di tabel setup_kel
+                            option.textContent = desa.nama;
+                            desaDropdown.appendChild(option);
+                        });
+                        desaDropdown.disabled = false; // Aktifkan dropdown setelah terisi
+                    })
+                    .catch(error => {
+                        console.error('Error fetching desa data:', error);
+                        desaDropdown.disabled = false;
+                    });
+            } else {
+                desaDropdown.disabled = false;
+            }
+        });
 
-            // Tambahkan opsi default
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.textContent = 'Pilih Kelurahan';
-            kelurahanDropdown.appendChild(defaultOption);
-
-            // Filter kelurahan berdasarkan kecamatan yang dipilih
-            const filteredKelurahan = allKelurahan.filter(kel => kel.no_kec == selectedKecamatanId);
-
-            // Tambahkan opsi yang sudah difilter
-            filteredKelurahan.forEach(kel => {
-                const option = document.createElement('option');
-                option.value = kel.no_kel;
-                option.textContent = kel.nama_kel;
-
-                // Jika kelurahan cocok dengan kelurahan pengguna, pilih secara otomatis
-                if (kel.no_kel == userKelId && selectedKecamatanId == userKecId) {
-                    option.selected = true;
-                }
-
-                kelurahanDropdown.appendChild(option);
-            });
-        }
-
-        // Panggil fungsi saat halaman dimuat
-        updateKelurahanDropdown();
-
-        // Panggil fungsi saat pilihan kecamatan berubah
-        kecamatanDropdown.addEventListener('change', updateKelurahanDropdown);
     });
 
 </script>
