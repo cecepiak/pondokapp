@@ -65,9 +65,8 @@
                 <div class="mb-4">
                     <label for="kecamatan" class="block text-sm font-medium text-gray-700">Kecamatan</label>
                     <select name="kec_id" id="kecamatan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        <option value="">Pilih Kecamatan</option>
-                        @foreach ($kecamatan as $kec)
-                        <option value="{{ $kec->id }}" @if ($user->kec_id == $kec->id) selected @endif>
+                        @foreach ($kecamatanList as $kec)
+                        <option value="{{ $kec->id }}" {{ $kec->id == $user->desa->kecamatan->id ? 'selected' : '' }}>
                             {{ $kec->nama }}
                         </option>
                         @endforeach
@@ -77,7 +76,11 @@
                 <div class="mb-4">
                     <label for="desa_kelurahan" class="block text-sm font-medium text-gray-700">Desa/Kelurahan</label>
                     <select name="desa_kelurahan" id="desa_kelurahan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        <option value="">Pilih Desa/Kelurahan</option>
+                        @foreach ($desaList as $desa)
+                        <option value="{{ $desa->id }}" {{ $desa->id == $user->desa->id ? 'selected' : '' }}>
+                            {{ $desa->nama }}
+                        </option>
+                        @endforeach
                     </select>
                 </div>
 

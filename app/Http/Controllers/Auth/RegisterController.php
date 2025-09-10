@@ -20,20 +20,6 @@ class RegisterController extends Controller
         return view('auth.register', compact('kecamatans'));
     }
 
-    /**
-     * Metode baru untuk mendapatkan desa berdasarkan ID kecamatan.
-     * Ini akan digunakan oleh AJAX.
-     */
-    public function getDesa(Request $request)
-    {
-        $kecamatanId = $request->input('id_kecamatan');
-        $desas = DB::table('desa')
-            ->where('kecamatan_id', $kecamatanId)
-            ->orderBy('nama')->get();
-
-        return response()->json($desas);
-    }
-
     public function register(Request $request)
     {
         // ... (metode register yang sudah ada)

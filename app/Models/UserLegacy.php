@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
+use App\Models\Desa;
 
 class UserLegacy extends Model implements Authenticatable
 {
@@ -19,6 +20,12 @@ class UserLegacy extends Model implements Authenticatable
         'password',
         'remember_code',
     ];
+
+    // Relasi: User -> Desa (berdasarkan kode_desa)
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'kode_desa', 'kode_desa');
+    }
 
     /**
      * Accesor untuk field 'first_name'.
