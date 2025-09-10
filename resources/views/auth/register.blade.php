@@ -154,7 +154,14 @@
                             const option = document.createElement('option');
                             option.value = desa.id; // Pastikan ID di tabel setup_kel
                             option.textContent = desa.nama;
-                            desaDropdown.appendChild(option);
+                            desaDropdown.innerHTML = ''; // Clear existing options
+                            desaDropdown.innerHTML = '<option value="">Pilih Desa/Kelurahan</option>'; // Add default option
+                            data.forEach(desa => {
+                                const option = document.createElement('option');
+                                option.value = desa.id;
+                                option.textContent = desa.nama;
+                                desaDropdown.appendChild(option);
+                            });
                         });
                         desaDropdown.disabled = false; // Aktifkan dropdown setelah terisi
                     })
